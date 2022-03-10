@@ -1,3 +1,4 @@
+import java.nio.ByteBuffer;
 import java.sql.*;
 
 import model.Customer;
@@ -6,7 +7,7 @@ public class OptimisticConcurrencyDemo {
 
 	public void updateCustomer(int customerId, String name) throws Exception {
 		
-		String updateCustomerSql = "UPDATE Customers SET Name = ? WHERE Id = ?";
+		String updateCustomerSql = "UPDATE Customers SET Name = ? WHERE Id = ? AND Version = ?";
 		
 		Connection conn = Database.getConnection(Connection.TRANSACTION_NONE);
 		
@@ -18,7 +19,8 @@ public class OptimisticConcurrencyDemo {
 
 			PreparedStatement updateCustomer = conn.prepareStatement(updateCustomerSql);
 			updateCustomer.setString(1, name);
-			updateCustomer.setInt(2, customerId);			
+			updateCustomer.setInt(2, customerId);	
+			updateCustomer.setBytes(3, customer.getRowversion());
 			
 			int rowsUpdated = updateCustomer.executeUpdate();				
 			
@@ -45,12 +47,14 @@ public class OptimisticConcurrencyDemo {
 			
 			if(rs.next()) {
 				
+				
 				return new Customer(
 						rs.getInt(1), // CustomerId 
 						rs.getString(2), // Name
 						rs.getString(3), // LatestOrderStatus
 						rs.getBytes(5) // Rowversion
 						);
+				
 			}
 			
 		} catch (SQLException e) {

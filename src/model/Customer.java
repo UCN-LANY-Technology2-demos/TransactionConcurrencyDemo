@@ -40,12 +40,13 @@ public class Customer {
 	public byte[] getRowversion() {
 		return rowversion;
 	}
-
+;
 	@Override
 	public String toString() {
 
+		
 		return "Customer: "+ name + ", Rowversion: "+ ByteBuffer.wrap(rowversion).getLong();		
-		//return "Customer: "+ name;
+//		return "Customer: "+ name;
 	}	
 	
 	
