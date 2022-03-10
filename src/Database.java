@@ -10,7 +10,7 @@ public abstract class Database {
 		
 		try {
 			SQLServerDataSource ds = new SQLServerDataSource();
-			ds.setUser("student");
+			ds.setUser("barista");
 			ds.setPassword("P@$$w0rd");
 			ds.setServerName("localhost\\sqlexpress");
 			ds.setDatabaseName("TheCoffeeBreak");

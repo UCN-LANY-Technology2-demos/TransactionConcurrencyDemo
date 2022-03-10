@@ -2,17 +2,17 @@
 public class Program {
 	public static void main(String[] args) {
 
-		OptimisticConcurrencyDemo demo = new OptimisticConcurrencyDemo(); 
-		//PessimisticConcurrencyDemo demo = new PessimisticConcurrencyDemo();
+		//OptimisticConcurrencyDemo demo = new OptimisticConcurrencyDemo(); 
+		PessimisticConcurrencyDemo demo = new PessimisticConcurrencyDemo();
 
 		Thread t1 = new Thread("T1") {
 			
 			public void run() {
 				try {
 					
-					//demo.updateCustomerOrderCount(1);
+					demo.updateCustomerOrderCount(1);
 					
-					demo.updateCustomer(1, "Klaus");
+					//demo.updateCustomer(1, "Klaus");
 					
 				} catch (Exception e) {
 
@@ -26,9 +26,9 @@ public class Program {
 			public void run() {
 				try {
 					
-					//demo.createOrder(1, 100);
+					demo.createOrder(1, 100);
 					
-					demo.updateCustomer(1, "Peter");
+					//demo.updateCustomer(1, "Peter");
 					
 				} catch (Exception e) {
 

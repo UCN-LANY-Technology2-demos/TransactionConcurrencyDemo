@@ -5,7 +5,7 @@ import java.sql.SQLException;
 
 public class PessimisticConcurrencyDemo {
 	
-	private int isolationLevel = Connection.TRANSACTION_NONE; // Try and change this to TRANSACTION_SERIALIZABLE
+	private int isolationLevel = Connection.TRANSACTION_SERIALIZABLE; // Try and change this to TRANSACTION_SERIALIZABLE
 	
 	public void updateCustomerOrderCount(int customerId) throws Exception {
 		
@@ -57,11 +57,12 @@ public class PessimisticConcurrencyDemo {
 	
 	public void createOrder(int customerId, int total) throws Exception {
 		
-		String createOrderSql = "INSERT INTO Orders VALUES (?, GETDATE(), ?, 'A')";
+		String createOrderSql = "INSERT INTO Orders VALUES (?, GETDATE(), ?, 'A', NULL)";
 		
 		Connection conn = Database.getConnection(isolationLevel);
 		
 		try {		
+			conn.setAutoCommit(false);
 			
 			PreparedStatement createOrder = conn.prepareStatement(createOrderSql);
 			createOrder.setInt(1, customerId);
