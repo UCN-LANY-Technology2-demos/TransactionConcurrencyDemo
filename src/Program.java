@@ -15,8 +15,11 @@ public class Program {
 //		Thread transaction1 = new Thread(new nonRepeatableReadDemo.T1());
 //		Thread transaction2 = new Thread(new nonRepeatableReadDemo.T2());
 
-		Thread transaction1 = new Thread(new phantomReadsDemo.T1());
-		Thread transaction2 = new Thread(new phantomReadsDemo.T2());
+//		Thread transaction1 = new Thread(new phantomReadsDemo.T1());
+//		Thread transaction2 = new Thread(new phantomReadsDemo.T2());
+
+		Thread transaction1 = new Thread(new optimisticConcurrencyDemo.T1());
+		Thread transaction2 = new Thread(new optimisticConcurrencyDemo.T1());
 
 		transaction1.start();
 		transaction2.start();
