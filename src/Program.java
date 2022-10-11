@@ -1,43 +1,35 @@
+import database.DataContext;
 
 public class Program {
 	public static void main(String[] args) {
 
-		OptimisticConcurrencyDemo demo = new OptimisticConcurrencyDemo(); 
-		//PessimisticConcurrencyDemo demo = new PessimisticConcurrencyDemo();
-
-		Thread t1 = new Thread("T1") {
-			
-			public void run() {
-				try {
-					
-//					demo.updateCustomerOrderCount(1);
-					
-					demo.updateCustomer(1, "Klaus");
-					
-				} catch (Exception e) {
-
-					e.printStackTrace();
-				}
-			}
-		};
+//		Thread transaction1 = new Thread(new lostUpdateDemo.T1());
+//		Thread transaction2 = new Thread(new lostUpdateDemo.T2());
 		
-		Thread t2 = new Thread("T2") {
-			
-			public void run() {
-				try {
-					
-//					demo.createOrder(1, 100);
-						
-					demo.updateCustomer(1, "Peter");
-					
-				} catch (Exception e) {
-
-					e.printStackTrace();
-				}
-			}
-		};
+//		Thread transaction1 = new Thread(new inconsistentRetrievalDemo.T1());
+//		Thread transaction2 = new Thread(new inconsistentRetrievalDemo.T2());
 		
-		t1.start();
-		t2.start();
+//		Thread transaction1 = new Thread(new dirtyReadDemo.T1());
+//		Thread transaction2 = new Thread(new dirtyReadDemo.T2());
+
+//		Thread transaction1 = new Thread(new nonRepeatableReadDemo.T1());
+//		Thread transaction2 = new Thread(new nonRepeatableReadDemo.T2());
+
+		Thread transaction1 = new Thread(new phantomReadsDemo.T1());
+		Thread transaction2 = new Thread(new phantomReadsDemo.T2());
+
+		transaction1.start();
+		transaction2.start();
+
+		try {
+			
+			transaction1.join();
+			transaction2.join();
+			
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
+		DataContext.resetDatabase();
 	}
 }
