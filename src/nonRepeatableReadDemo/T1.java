@@ -15,7 +15,7 @@ public class T1 implements Runnable {
 		String sql = "SELECT Name, Age FROM Users WHERE Id = 1";
 
 		try {
-			Connection conn = DataContext.getConnection(Connection.TRANSACTION_NONE);
+			Connection conn = DataContext.getConnection(Connection.TRANSACTION_REPEATABLE_READ);
 
 			conn.setAutoCommit(false);
 			

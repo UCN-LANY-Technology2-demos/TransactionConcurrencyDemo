@@ -1,11 +1,13 @@
 package lostUpdateDemo;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import database.DataContext;
+import com.microsoft.sqlserver.jdbc.SQLServerException;
 
+import database.DataContext;
 
 public class T1 implements Runnable {
 
@@ -44,29 +46,40 @@ public class T1 implements Runnable {
 	public void run() {
 
 		int id = 2;
-
+		Connection conn;
 		try {
-			Connection conn = DataContext.getConnection(); // add a isolationlevel before running in a transaction
+			conn = DataContext.getConnection(Connection.TRANSACTION_SERIALIZABLE);
+
+			DataContext.printSessionInfo(conn);
 			
-			// set autocommit to false
-			
-			float balance = getBalance(conn, id);
+			try {
 
-			printInfo(id, balance);
+				// set autocommit to false
+				conn.setAutoCommit(false);
 
-			addInterest(conn, id, balance * 1.1f);
+				float balance = getBalance(conn, id);
 
-			balance = getBalance(conn, id);
+				printInfo(id, balance);
 
-			printInfo(id, balance);
-			
-			// commit transaction here
+				addInterest(conn, id, balance * 1.1f);
 
-		} catch (SQLException e) {
-			
-			System.out.println(Thread.currentThread().getName() + " Failed!");
-			System.out.println(e.getMessage());			
-		}
+				balance = getBalance(conn, id);
+
+				printInfo(id, balance);
+
+				// commit transaction here
+				conn.commit();
+
+			} catch (SQLException e) {
+
+				conn.rollback();
+				System.out.println(Thread.currentThread().getName() + " Failed!");
+				System.out.println(e.getMessage());
+			}
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} // add a isolationlevel before running in a transaction
 
 	}
 }

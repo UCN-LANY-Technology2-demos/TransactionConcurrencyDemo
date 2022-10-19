@@ -17,7 +17,7 @@ public class T1 extends InconsistentRetrieval implements Runnable {
 			
 			System.out.println(Thread.currentThread().getName() + " start");
 			
-			Connection conn = DataContext.getConnection(Connection.TRANSACTION_REPEATABLE_READ); // add a isolationlevel before running in a transaction
+			Connection conn = DataContext.getConnection(Connection.TRANSACTION_SERIALIZABLE); // add a isolationlevel before running in a transaction
 			
 			// set autocommit to false
 			conn.setAutoCommit(false);
