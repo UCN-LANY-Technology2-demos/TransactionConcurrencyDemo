@@ -14,10 +14,8 @@ public class T2 extends InconsistentRetrieval implements Runnable {
 			
 			System.out.println(Thread.currentThread().getName() + " start");
 			
-			Connection conn = DataContext.getConnection(Connection.TRANSACTION_SERIALIZABLE); 
+			Connection conn = DataContext.getConnection(Connection.TRANSACTION_NONE); 
 			conn.setAutoCommit(false);
-			
-			Thread.sleep(1000);
 			
 			float total = total(conn);
 			
@@ -27,15 +25,8 @@ public class T2 extends InconsistentRetrieval implements Runnable {
 			
 			conn.commit();
 			
-//			Thread.sleep(1000);
-//			
-//			total = total(conn);
-//			
-//			System.out.println(Thread.currentThread().getName() + " - total: " + total);
-//			
-//			System.out.println(Thread.currentThread().getName() + " finish");
 
-		} catch (SQLException | InterruptedException e) {
+		} catch (SQLException e) {
 			
 			System.out.println(Thread.currentThread().getName() + " Failed!");
 			System.out.println(e.getMessage());			

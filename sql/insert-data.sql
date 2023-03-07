@@ -1,3 +1,6 @@
+USE [TransactionDemo]
+GO
+
 TRUNCATE TABLE Account;
 
 INSERT INTO Account (Id, Balance) VALUES(1, 100);  

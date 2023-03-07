@@ -14,7 +14,7 @@ public class T1 implements Runnable {
 		String sql = "UPDATE Users SET Age = 21 WHERE Id = 1";
 		
 		try {
-			Connection conn = DataContext.getConnection(Connection.TRANSACTION_READ_UNCOMMITTED);
+			Connection conn = DataContext.getConnection(Connection.TRANSACTION_NONE);
 			
 			conn.setAutoCommit(false);
 			

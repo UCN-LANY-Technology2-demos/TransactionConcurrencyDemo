@@ -17,7 +17,7 @@ public class T2 implements Runnable {
 		try {
 			Thread.sleep(1000);
 
-			Connection conn = DataContext.getConnection(Connection.TRANSACTION_READ_COMMITTED);
+			Connection conn = DataContext.getConnection(Connection.TRANSACTION_NONE);
 
 			Statement selectStatement = conn.createStatement();
 

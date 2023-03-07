@@ -5,8 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.microsoft.sqlserver.jdbc.SQLServerException;
-
 import database.DataContext;
 
 public class T2 implements Runnable {
@@ -49,7 +47,7 @@ public class T2 implements Runnable {
 
 		Connection conn;
 		try {
-			conn = DataContext.getConnection(Connection.TRANSACTION_SERIALIZABLE);
+			conn = DataContext.getConnection(Connection.TRANSACTION_REPEATABLE_READ);
 
 			try {
 
