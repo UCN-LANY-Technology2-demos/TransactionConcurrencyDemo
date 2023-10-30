@@ -1,12 +1,14 @@
 package inconsistentRetrievalDemo;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
+
+import database.Account;
 import database.DataContext;
 
-public class T1 extends InconsistentRetrieval implements Runnable {
+public class T1 extends Account implements Runnable {
 
-	
 	@Override
 	public void run() {
 
@@ -16,27 +18,19 @@ public class T1 extends InconsistentRetrieval implements Runnable {
 		try {
 			
 			System.out.println(Thread.currentThread().getName() + " start");
+				
+			Connection conn = DataContext.getConnection(); 
 			
-			Connection conn = DataContext.getConnection(Connection.TRANSACTION_NONE); // add a isolationlevel before running in a transaction
+			float balance = getBalance(conn, 2);
 			
-			// set autocommit to false
-			conn.setAutoCommit(false);
+			setBalance(conn, 1, balance + 100);
 			
-			withdraw(conn, a2, 100);
-			
-			deposit(conn, a1, 100);
-			
-			// commit transaction here
-			conn.commit();
-
 			System.out.println(Thread.currentThread().getName() + " finish");
 
 		} catch (SQLException e) {
 			
 			System.out.println(Thread.currentThread().getName() + " Failed!");
 			System.out.println(e.getMessage());			
-		}
-		
+		}		
 	}
-
 }

@@ -3,12 +3,12 @@ import database.DataContext;
 public class Program {
 	public static void main(String[] args) {
 
-//		Thread transaction1 = new Thread(new lostUpdateDemo.T1());
-//		Thread transaction2 = new Thread(new lostUpdateDemo.T2());
+		Thread transaction1 = new Thread(new lostUpdateDemo.T1());
+		Thread transaction2 = new Thread(new lostUpdateDemo.T1());
 		
 //		the inconsistent retrieval demo doesn't work and must be changed later
-		Thread transaction1 = new Thread(new inconsistentRetrievalDemo.T1());
-		Thread transaction2 = new Thread(new inconsistentRetrievalDemo.T2());
+//		Thread transaction2 = new Thread(new inconsistentRetrievalDemo.T1());
+//		Thread transaction1 = new Thread(new inconsistentRetrievalDemo.T2());
 		
 //		Thread transaction1 = new Thread(new dirtyReadDemo.T1());
 //		Thread transaction2 = new Thread(new dirtyReadDemo.T2());

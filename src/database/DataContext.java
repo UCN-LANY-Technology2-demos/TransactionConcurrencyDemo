@@ -6,24 +6,23 @@ import com.microsoft.sqlserver.jdbc.SQLServerException;
 
 public abstract class DataContext {
 
-	public static Connection getConnection() throws SQLServerException {
+	public static Connection getConnection(int isolationLevel) throws SQLServerException {
 		
 		Connection conn = null;
 
 		SQLServerDataSource ds = new SQLServerDataSource();
 		ds.setUser("student");
 		ds.setPassword("P@$$w0rd");
-		ds.setServerName("192.168.56.101");
+		ds.setServerName("192.168.56.107");
 		ds.setDatabaseName("TransactionDemo");
 		conn = ds.getConnection();
 
 		return conn;
 	}
 
-	public static Connection getConnection(int isolationLevel) throws SQLException {
+	public static Connection getConnection() throws SQLException {
 
-		Connection conn = getConnection();
-		conn.setTransactionIsolation(isolationLevel);
+		Connection conn = getConnection(0);
 
 		return conn;
 	}
